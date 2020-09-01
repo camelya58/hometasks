@@ -1,9 +1,9 @@
 package hometask28;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
-import java.time.*;
-import java.time.format.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Lesson28 {
     static DateTimeFormatter df1 = DateTimeFormatter.ofPattern("yyyy, MMMM-dd !! hh:mm");
