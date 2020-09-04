@@ -3,8 +3,6 @@ package hometask30;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class RegEx4 allows to generate random password consisting of 8 symbols (numbers and letters)
