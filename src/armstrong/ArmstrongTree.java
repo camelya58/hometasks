@@ -2,13 +2,7 @@ package armstrong;
 
 import java.util.*;
 
-/**
- * Class Optimize
- *
- * @author Kamila Meshcheryakova
- * created by 28.10.2020
- */
-public class Optimize {
+public class ArmstrongTree {
 
     public static long[][] initialArray = new long[10][20];
 
@@ -32,8 +26,7 @@ public class Optimize {
         if (N <= 0) return new long[0];
         int numberLength = getNumberLength(N);
         int[] numbersArray = getNumbersArray(numberLength);
-        Set<Long> set = new TreeSet<>(getUniqueNumbersList(numbersArray, N));
-        List<Long> armstrongList = new ArrayList<>(set);
+        List<Long> armstrongList = new ArrayList<>(getUniqueNumbersList(numbersArray, N));
         long[] armstrongArray = new long[armstrongList.size()];
         for (int i = 0; i < armstrongList.size(); i++) {
             armstrongArray[i] = armstrongList.get(i);
@@ -75,12 +68,12 @@ public class Optimize {
         return count;
     }
 
-    private static List<Long> getUniqueNumbersList(int[] array, long N) {
-        List<Long> list = new ArrayList<>(50);
+    private static Set<Long> getUniqueNumbersList(int[] array, long N) {
+        Set<Long> set = new TreeSet<>();
         int index = 0;
         while (array[array.length - 1] > 0) {
             if (array[0] > 0 || array[1] == 0) {
-                iterateNewArray(array, list, N);
+                iterateNewArray(array, set, N);
             }
             if (array[0] == 0) {
                 index++;
@@ -104,12 +97,12 @@ public class Optimize {
                 }
             }
         }
-        return list;
+        return set;
     }
 
-    private static void iterateNewArray(int[] array, List<Long> list, long N) {
+    private static void iterateNewArray(int[] array, Set<Long> set, long N) {
         while (array[0] >= 0) {
-            recurseSumOfDegrees(array, list, N);
+            recurseSumOfDegrees(array, set, N);
             if (array[0] == 0) {
                 break;
             }
@@ -117,28 +110,29 @@ public class Optimize {
         }
     }
 
-    private static void recurseSumOfDegrees(int[] array, List<Long> list, long N) {
+    private static void recurseSumOfDegrees(int[] array, Set<Long> set, long N) {
         long sum = 0;
         for (int element : array) {
             sum += initialArray[element][array.length];
         }
         if (sum > 0 && isArmstrongNumber(sum) && sum < N) {
-            list.add(sum);
+            set.add(sum);
         }
         for (int element : array) {
             if (element == 0) {
                 int[] extraArray = new int[array.length - 1];
                 System.arraycopy(array, 1, extraArray, 0, extraArray.length);
-                recurseSumOfDegrees(extraArray, list, N);
-                return;
+                recurseSumOfDegrees(extraArray, set, N);
+                break;
             }
         }
+
     }
 
     public static void main(String[] args) {
 
         long a = System.currentTimeMillis();
-        System.out.println(Arrays.toString(getNumbers(100_000_000_000L)));
+        System.out.println(Arrays.toString(getNumbers(0)));
         long b = System.currentTimeMillis();
         System.out.println("memory " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (8 * 1024));
         System.out.println("time = " + (b - a) / 1000);
